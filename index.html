@@ -17,6 +17,7 @@
       position: relative;
     }
 
+    /* GIANT WAVY JONE */
     h1 {
       position: relative;
       z-index: 100;
@@ -24,6 +25,7 @@
       font-size: 120px;
       font-family: Arial, sans-serif;
       margin: 30px 0;
+      pointer-events: none;
     }
 
     h1 span {
@@ -61,8 +63,10 @@
       }
     }
 
-    #joneGif {
+    /* ALL FIVE JONES */
+    .jonesGif {
       position: absolute;
+      height: auto;
 
       transition:
         left 0.7s ease,
@@ -73,9 +77,9 @@
   </style>
 </head>
 
-
 <body>
 
+  <!-- WAVY RAINBOW JONE -->
   <h1>
     <span>J</span>
     <span>O</span>
@@ -83,21 +87,21 @@
     <span>E</span>
   </h1>
 
-
-  <img
-    id="joneGif"
-    src="jones1.gif"
-    alt="Jone"
-  >
-
+  <!-- FIVE JONES -->
+  <img class="jonesGif" src="jones1.gif" alt="Jone">
+  <img class="jonesGif" src="jones2.gif" alt="Jone">
+  <img class="jonesGif" src="jones3.gif" alt="Jone">
+  <img class="jonesGif" src="jones4.gif" alt="Jone">
+  <img class="jonesGif" src="jones5.gif" alt="Jone">
 
   <script>
 
-    const gif = document.getElementById("joneGif");
+    const gifs = document.querySelectorAll(".jonesGif");
 
-    function randomizeJone() {
+    function randomizeJone(gif) {
 
-      // RANDOM GIF (Jones1.gif through Jones10.gif)
+      // RANDOM GIF
+      // jones1.gif through jones10.gif
       const randomGif =
         Math.floor(Math.random() * 10) + 1;
 
@@ -105,15 +109,17 @@
 
 
       // RANDOM SIZE
+      // Between 100px and 350px
       const randomSize =
-        Math.floor(Math.random() * 300) + 150;
+        Math.floor(Math.random() * 250) + 100;
 
       gif.style.width = randomSize + "px";
 
 
       // RANDOM ROTATION
+      // Between -90 and +90 degrees
       const randomRotation =
-        Math.floor(Math.random() * 90) - 45;
+        Math.floor(Math.random() * 180) - 90;
 
       gif.style.transform =
         `rotate(${randomRotation}deg)`;
@@ -137,11 +143,21 @@
     }
 
 
-    // Start the chaos immediately
-    randomizeJone();
+    function unleashTheJones() {
 
-    // New Jones every 3 seconds
-    setInterval(randomizeJone, 3000);
+      gifs.forEach(gif => {
+        randomizeJone(gif);
+      });
+
+    }
+
+
+    // UNLEASH THE JONES IMMEDIATELY
+    unleashTheJones();
+
+
+    // ALL FIVE CHANGE EVERY 3 SECONDS
+    setInterval(unleashTheJones, 3000);
 
   </script>
 
