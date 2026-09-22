@@ -63,7 +63,7 @@
       }
     }
 
-    /* ALL FIVE JONES */
+    /* ALL THE JONES */
     .jonesGif {
       position: absolute;
       height: auto;
@@ -72,7 +72,13 @@
         left 0.7s ease,
         top 0.7s ease,
         width 0.7s ease,
-        transform 0.7s ease;
+        transform 0.7s ease,
+        opacity 0.4s ease;
+    }
+
+    /* Used when a Jones disappears */
+    .hidden {
+      opacity: 0;
     }
   </style>
 </head>
@@ -87,21 +93,29 @@
     <span>E</span>
   </h1>
 
-  <!-- FIVE JONES -->
+
+  <!-- SEVEN JONES -->
   <img class="jonesGif" src="jones1.gif" alt="Jone">
   <img class="jonesGif" src="jones2.gif" alt="Jone">
   <img class="jonesGif" src="jones3.gif" alt="Jone">
   <img class="jonesGif" src="jones4.gif" alt="Jone">
   <img class="jonesGif" src="jones5.gif" alt="Jone">
+  <img class="jonesGif" src="jones6.gif" alt="Jone">
+  <img class="jonesGif" src="jones7.gif" alt="Jone">
+
 
   <script>
 
     const gifs = document.querySelectorAll(".jonesGif");
 
+
+    // =====================================
+    // RANDOMIZE A JONES
+    // =====================================
+
     function randomizeJone(gif) {
 
-      // RANDOM GIF
-      // jones1.gif through jones10.gif
+      // Pick jones1.gif through jones10.gif
       const randomGif =
         Math.floor(Math.random() * 10) + 1;
 
@@ -109,9 +123,9 @@
 
 
       // RANDOM SIZE
-      // Between 100px and 350px
+      // Between 150px and 525px
       const randomSize =
-        Math.floor(Math.random() * 250) + 100;
+        Math.floor(Math.random() * 375) + 150;
 
       gif.style.width = randomSize + "px";
 
@@ -143,21 +157,76 @@
     }
 
 
-    function unleashTheJones() {
 
-      gifs.forEach(gif => {
-        randomizeJone(gif);
-      });
+    // =====================================
+    // RANDOM DISAPPEARING JONES
+    // =====================================
 
+    function joneCycle(gif) {
+
+      // Pick a random lifespan
+      // Between 3 and 10 seconds
+      const disappearTime =
+        Math.random() * 7000 + 3000;
+
+
+      setTimeout(() => {
+
+        // Fade out
+        gif.classList.add("hidden");
+
+
+        // Wait for fade animation
+        setTimeout(() => {
+
+          // Transform into a new Jones
+          randomizeJone(gif);
+
+          // Fade back in
+          gif.classList.remove("hidden");
+
+          // Give this Jones another random lifespan
+          joneCycle(gif);
+
+        }, 500);
+
+      }, disappearTime);
     }
 
 
-    // UNLEASH THE JONES IMMEDIATELY
-    unleashTheJones();
+
+    // =====================================
+    // UNLEASH THE SEVEN JONES
+    // =====================================
+
+    gifs.forEach(gif => {
+
+      // Random starting Jones
+      randomizeJone(gif);
+
+      // Independent disappearance timer
+      joneCycle(gif);
+
+    });
 
 
-    // ALL FIVE CHANGE EVERY 3 SECONDS
-    setInterval(unleashTheJones, 3000);
+
+    // =====================================
+    // MOVE THE JONES EVERY 3 SECONDS
+    // =====================================
+
+    setInterval(() => {
+
+      gifs.forEach(gif => {
+
+        // Don't move a Jones while it's invisible
+        if (!gif.classList.contains("hidden")) {
+          randomizeJone(gif);
+        }
+
+      });
+
+    }, 3000);
 
   </script>
 
