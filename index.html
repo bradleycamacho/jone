@@ -63,6 +63,7 @@
       }
     }
 
+
     /* ALL THE JONES */
     .jonesGif {
       position: absolute;
@@ -76,12 +77,15 @@
         opacity 0.4s ease;
     }
 
-    /* Used when a Jones disappears */
+
+    /* JONES DISAPPEARING */
     .hidden {
       opacity: 0;
     }
+
   </style>
 </head>
+
 
 <body>
 
@@ -109,13 +113,14 @@
     const gifs = document.querySelectorAll(".jonesGif");
 
 
-    // =====================================
-    // RANDOMIZE A JONES
-    // =====================================
+    // ==========================================
+    // RANDOMIZE ONE JONES
+    // ==========================================
 
     function randomizeJone(gif) {
 
-      // Pick jones1.gif through jones10.gif
+      // Pick a random GIF:
+      // jones1.gif through jones10.gif
       const randomGif =
         Math.floor(Math.random() * 10) + 1;
 
@@ -158,75 +163,65 @@
 
 
 
-    // =====================================
-    // RANDOM DISAPPEARING JONES
-    // =====================================
+    // ==========================================
+    // INDEPENDENT JONES CYCLE
+    // ==========================================
 
     function joneCycle(gif) {
 
-      // Pick a random lifespan
-      // Between 3 and 10 seconds
-      const disappearTime =
+      // Every Jones gets its OWN random timer.
+      // Anywhere from 3 to 10 seconds.
+      const randomTime =
         Math.random() * 7000 + 3000;
 
 
       setTimeout(() => {
 
-        // Fade out
+        // Fade this Jones out
         gif.classList.add("hidden");
 
 
-        // Wait for fade animation
+        // Wait for the fade to finish
         setTimeout(() => {
 
-          // Transform into a new Jones
+          // Give it a new random:
+          // GIF
+          // size
+          // rotation
+          // position
           randomizeJone(gif);
 
-          // Fade back in
+
+          // Bring the new Jones back
           gif.classList.remove("hidden");
 
-          // Give this Jones another random lifespan
+
+          // Start a completely new random timer
+          // for THIS Jones only
           joneCycle(gif);
 
         }, 500);
 
-      }, disappearTime);
+      }, randomTime);
+
     }
 
 
 
-    // =====================================
-    // UNLEASH THE SEVEN JONES
-    // =====================================
+    // ==========================================
+    // RELEASE THE JONES
+    // ==========================================
 
     gifs.forEach(gif => {
 
-      // Random starting Jones
+      // Give each Jones a random starting form
       randomizeJone(gif);
 
-      // Independent disappearance timer
+
+      // Start an independent random cycle
       joneCycle(gif);
 
     });
-
-
-
-    // =====================================
-    // MOVE THE JONES EVERY 3 SECONDS
-    // =====================================
-
-    setInterval(() => {
-
-      gifs.forEach(gif => {
-
-        // Don't move a Jones while it's invisible
-        if (!gif.classList.contains("hidden")) {
-          randomizeJone(gif);
-        }
-
-      });
-
-    }, 3000);
 
   </script>
 
